@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32616.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CrystalPowerBCS", "CrystalPowerBCS\CrystalPowerBCS.csproj", "{550D39BC-F1BF-4C0D-90C4-C6FAD85A458D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{F27A2575-F250-4249-A699-34B9BF878164}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{80511E36-4D0A-4F17-A9A8-2FCB2EDEF4DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gurux.Common", "Gurux.Common\trunk\Development\Gurux.Common.csproj", "{749652D4-4779-4869-AD81-5211A661CD1B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gurux.DLMS", "Gurux.DLMS.Net\trunk\Development\Gurux.DLMS.csproj", "{EFD71BFF-AD54-45ED-B473-305813C2F83A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gurux.Net", "Gurux.Net\trunk\Development\Gurux.Net.csproj", "{CB63EA09-D6BC-4B1D-927E-83041A222D54}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gurux.Serial", "Gurux.Serial\trunk\Development\Gurux.Serial.csproj", "{D07A57D7-F2E7-4A0F-95D1-EF3B1FD688F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{550D39BC-F1BF-4C0D-90C4-C6FAD85A458D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{550D39BC-F1BF-4C0D-90C4-C6FAD85A458D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{550D39BC-F1BF-4C0D-90C4-C6FAD85A458D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{550D39BC-F1BF-4C0D-90C4-C6FAD85A458D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F27A2575-F250-4249-A699-34B9BF878164}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F27A2575-F250-4249-A699-34B9BF878164}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F27A2575-F250-4249-A699-34B9BF878164}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F27A2575-F250-4249-A699-34B9BF878164}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80511E36-4D0A-4F17-A9A8-2FCB2EDEF4DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80511E36-4D0A-4F17-A9A8-2FCB2EDEF4DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80511E36-4D0A-4F17-A9A8-2FCB2EDEF4DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80511E36-4D0A-4F17-A9A8-2FCB2EDEF4DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{749652D4-4779-4869-AD81-5211A661CD1B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{749652D4-4779-4869-AD81-5211A661CD1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{749652D4-4779-4869-AD81-5211A661CD1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{749652D4-4779-4869-AD81-5211A661CD1B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFD71BFF-AD54-45ED-B473-305813C2F83A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFD71BFF-AD54-45ED-B473-305813C2F83A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFD71BFF-AD54-45ED-B473-305813C2F83A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFD71BFF-AD54-45ED-B473-305813C2F83A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB63EA09-D6BC-4B1D-927E-83041A222D54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB63EA09-D6BC-4B1D-927E-83041A222D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB63EA09-D6BC-4B1D-927E-83041A222D54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB63EA09-D6BC-4B1D-927E-83041A222D54}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D07A57D7-F2E7-4A0F-95D1-EF3B1FD688F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D07A57D7-F2E7-4A0F-95D1-EF3B1FD688F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D07A57D7-F2E7-4A0F-95D1-EF3B1FD688F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D07A57D7-F2E7-4A0F-95D1-EF3B1FD688F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7E0B10F2-9DD4-41E4-95EE-598A9A6B70A1}
+	EndGlobalSection
+EndGlobal

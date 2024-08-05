@@ -1,0 +1,149 @@
+﻿<UserControl x:Class="CrystalPowerBCS.Views.SelfDiagnostic"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CrystalPowerBCS.Views" xmlns:sys="clr-namespace:System;assembly=netstandard"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
+
+    <Grid Margin="30,30,30,30">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="83"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+
+        <TextBox x:Name="MeterPhaseType" Text="{Binding MeterType, UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangeGridType" Visibility="Collapsed"/>
+        <TextBox x:Name="CurrentHeight" Text="{Binding CurrentHeight, UpdateSourceTrigger=PropertyChanged}" TextChanged="OnResize" Visibility="Collapsed"/>
+        <!--<TextBox x:Name="SelectedDate" Text="{Binding SelectedDate, UpdateSourceTrigger=PropertyChanged}" TextChanged="GlobalDateChange" Visibility="Collapsed"/>-->
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,0">
+            <Grid Background="#F3F5F9">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <!--Page Title-->
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Self Diagnostic" FontSize="32" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" Padding="0,5,10,5" FontFamily="Calibri Light"/>
+                </StackPanel>
+                <!--- Export -->
+                <StackPanel x:Name="ExportDataGrid" Grid.Row="0" HorizontalAlignment="Right" Margin="0,10,0,0" Visibility="Visible">
+                    <ComboBox x:Name="cbExport" Margin="0,0,10,0" Width="105" SelectionChanged="ExportData">
+                        <ComboBoxItem Name="placeholder" IsSelected="True">Export</ComboBoxItem>
+                        <ComboBoxItem Name="excel">Export as Excel</ComboBoxItem>
+                        <ComboBoxItem Name="pdf">Export as Pdf</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+
+            </Grid>
+        </StackPanel>
+
+        <!--Data Grid-->
+        <StackPanel DataContext="{Binding}" Grid.Row="1" Margin="0,0,0,0" x:Name="TableView" Visibility="Visible">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel  Grid.Row="0" x:Name="Grid_Parent" Background="#FFEAEDF1">
+                    <!-- Single Phase Grid -->
+                    <DataGrid DataContext="{Binding}" Background="#EAEDF1"  MinHeight="100" MaxHeight="800" Padding="0,0,0,0" RowStyle="{DynamicResource DataGridRowStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" x:Name="SelfDiagnosticGrid" Style="{DynamicResource DataGridStyle1}"  Visibility="Visible">
+                      
+                        <DataGrid.Columns>
+                            <!--<DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding Number}" />-->
+                            <DataGridTextColumn Binding="{Binding CreatedOn}" IsReadOnly="True" Width="auto">
+                                <DataGridTextColumn.Header>
+                                    <StackPanel>
+                                        <!--<TextBlock Text="8-0.0.1.0.0.255."></TextBlock>-->
+                                        <TextBlock Text="Date time"></TextBlock>
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding RTCBattery}" IsReadOnly="True" Width="auto">
+                                <DataGridTextColumn.Header>
+                                    <StackPanel>
+                                        <!--<TextBlock Text="3-1.0.12.7.0.255."></TextBlock>-->
+                                        <TextBlock Text="RTC Battery Status"></TextBlock>
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Binding="{Binding MainBattery}" IsReadOnly="True" Width="auto">
+                                <DataGridTextColumn.Header>
+                                    <StackPanel>
+                                        <!--<TextBlock Text="3-1.0.12.7.0.255."></TextBlock>-->
+                                        <TextBlock Text="Main Battery Status"></TextBlock>
+                                    </StackPanel>
+                                </DataGridTextColumn.Header>
+                            </DataGridTextColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                 </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <!--Data Grid Paginator-->
+        <StackPanel x:Name="Paginator" Width="auto" Margin="0,0,0,0" Grid.Row="2"  Visibility="Visible">
+            
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <TextBlock Margin="0,0,10,0">Start Date</TextBlock>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <DatePicker Background="#EAEDF1" BorderThickness="0" Margin="0,10,0,0" SelectedDateFormat="Short" Width="105" x:Name="FilterDatePicker" IsTodayHighlighted="True"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <TextBlock Margin="10,0,10,0">End Date</TextBlock>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <DatePicker Background="#EAEDF1" BorderThickness="0" Margin="0,10,0,0" SelectedDateFormat="Short" Width="105" x:Name="FilterToDatePicker" IsTodayHighlighted="True" />
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left"  VerticalAlignment="Bottom">
+                    <ComboBox x:Name="gridPageSize" Margin="10,0,0,0" Width="50"  SelectedIndex="0" SelectionChanged="FilterByPageSize" Opacity="0.75">
+
+                        <sys:String>All</sys:String>
+
+                        <sys:Int32>10</sys:Int32>
+
+                        <sys:Int32>20</sys:Int32>
+
+                        <sys:Int32>30</sys:Int32>
+
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <Button Margin="10,0,0,0" MinWidth="50" x:Name="FilterData" Click="FilterByDate">Filter</Button>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+
+        <!--Graph-->
+        <StackPanel Grid.Row="1" Margin="0,0,0,0" x:Name="GraphView" Visibility="Collapsed">
+            <Border BorderBrush="Black" BorderThickness="1" Margin="10,55,0,0" VerticalAlignment="Center"  >
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel x:Name="Grid_Parent1">
+                        <Grid Grid.Row="0" Margin="0,0,0,0" x:Name="MainGraphView">
+
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </Grid>
+
+</UserControl>
+

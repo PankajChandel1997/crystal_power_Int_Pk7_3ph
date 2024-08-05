@@ -1,0 +1,606 @@
+﻿<UserControl x:Class="CrystalPowerBCS.Views.Reports"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CrystalPowerBCS.Views" xmlns:sys="clr-namespace:System;assembly=netstandard"
+             mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+
+    </UserControl.Resources>
+    <Grid Margin="30,30,30,30">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="83"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="35"/>
+        </Grid.RowDefinitions>
+
+        <TextBox x:Name="MeterPhaseType" Text="{Binding MeterType, UpdateSourceTrigger=PropertyChanged}" TextChanged="ChangeGridType" Visibility="Collapsed"/>
+        <TextBox x:Name="CurrentHeight" Text="{Binding CurrentHeight, UpdateSourceTrigger=PropertyChanged}" TextChanged="OnResize" Visibility="Collapsed"/>
+        <!--<TextBox x:Name="SelectedDate" Text="{Binding SelectedDate, UpdateSourceTrigger=PropertyChanged}" TextChanged="GlobalDateChange" Visibility="Collapsed"/>-->
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,0">
+            <Grid Background="#F3F5F9">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <!--Page Title-->
+                <StackPanel Grid.Row="1">
+                    <TextBlock Text="Reports" FontSize="32" FontWeight="SemiBold" Foreground="#121518" HorizontalAlignment="Left" Padding="0,5,10,5" FontFamily="Calibri Light"/>
+                </StackPanel>
+
+                <!--- Export -->
+                <StackPanel x:Name="ExportDataGrid" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,0,0" Visibility="Visible">
+                    <ComboBox x:Name="cbExport" Margin="0,0,10,0" Width="105" SelectionChanged="ExportData">
+                        <ComboBoxItem Name="placeholder" IsSelected="True">Export</ComboBoxItem>
+                        <ComboBoxItem Name="excel">Export as Excel</ComboBoxItem>
+                        <ComboBoxItem Name="pdf">Export as Pdf</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+                <StackPanel x:Name="ExportChartGrid" Grid.Row="1" HorizontalAlignment="Right" Margin="0,10,0,0" Visibility="Collapsed">
+                    <ComboBox x:Name="cbExportChart" Margin="0,0,10,0" Width="105">
+                        <ComboBoxItem Name="placeholder1" IsSelected="True">Export</ComboBoxItem>
+                        <ComboBoxItem Name="jpg">Export as JPG</ComboBoxItem>
+                        <ComboBoxItem Name="png">Export as PNG</ComboBoxItem>
+                    </ComboBox>
+                </StackPanel>
+
+
+                <!-- Headings -->
+                <StackPanel Background="#EAEDF1" Grid.Row="2" MouseUp="ShowHideFilter" Visibility="Collapsed">
+                    <DockPanel>
+                        <TextBlock Margin="10,10"  Text="Reading" FontSize="16" FontWeight="SemiBold" Foreground="Black" Height="24"/>
+                        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <StackPanel Margin="0,0,10,0" HorizontalAlignment="Right" x:Name="downarrow" MouseUp="ShowHideFilter">
+                                <Image Width="15">
+                                    <Image.Source>
+                                        <BitmapImage UriSource="../Images/downarrow.png"/>
+                                    </Image.Source>
+                                </Image>
+                            </StackPanel>
+                            <StackPanel Margin="0,0,10,0" HorizontalAlignment="Right" x:Name="uparrow" MouseUp="ShowHideFilter">
+                                <Image Width="15">
+                                    <Image.Source>
+                                        <BitmapImage UriSource="../Images/uparrow.png"/>
+                                    </Image.Source>
+                                </Image>
+                            </StackPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </StackPanel>
+
+                <!--Filters Controls-->
+                <Grid Grid.Row="3" x:Name="Filters" Visibility="Collapsed">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Visibility="Collapsed" Text="PROFILE GENERIC"  FontSize="12" FontWeight="SemiBold" Foreground="SkyBlue"   HorizontalAlignment="Left" Height="21" Padding="10,0,0,0"/>
+
+                        <!--switch-->
+
+                        <Grid>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Background="#EAEDF1" Grid.Row="0">
+                                <Grid>
+                                    <Grid.Resources>
+                                        <Style TargetType="{x:Type StackPanel}">
+                                            <Setter Property="Margin" Value="5,5,5,5"/>
+                                        </Style>
+                                    </Grid.Resources>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"  />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Row="0" Grid.Column="0" Background="White" HorizontalAlignment="Stretch">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                        </Grid>
+
+                                        <StackPanel Margin="5,5,5,0" Grid.Row="0" Width="490">
+
+                                            <StackPanel Width="490" HorizontalAlignment="Center">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1*" />
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <StackPanel Grid.Row="0" Grid.Column="0" Width="200" HorizontalAlignment="Left">
+                                                        <StackPanel VerticalAlignment="Center" Margin="0,0,0,0">
+                                                            <RadioButton x:Name = "read"  >
+                                                                <TextBlock Text="Read" FontSize="14" />
+                                                            </RadioButton>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+
+                                                            <TextBox Background="#EAEDF1" BorderThickness="0" x:Name="txtNum" x:FieldModifier="private" Text="0" TextChanged="TxtNum_TextChanged" MinWidth="23" MinHeight="10" Height="25" Width="200" Padding="5,5,0,0" ScrollViewer.CanContentScroll="True"/>
+
+                                                        </StackPanel>
+                                                    </StackPanel>
+
+                                                    <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
+                                                        <StackPanel VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Stretch" >
+                                                            <RadioButton x:Name = "count"  >
+                                                                <TextBlock Text="Count" FontSize="14" />
+                                                            </RadioButton>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+
+                                                            <TextBox Background="#EAEDF1" BorderThickness="0" x:Name="txtNum1" x:FieldModifier="private" Padding="5,5,0,0" Text="0" TextChanged="TxtNum_TextChanged"  MinWidth="23" MinHeight="10" Height="25" Width="200"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+
+                                                </Grid>
+                                            </StackPanel>
+
+                                        </StackPanel>
+
+                                        <StackPanel Margin="5,5,5,0" Grid.Row="1" Width="490">
+                                            <StackPanel HorizontalAlignment="Center" Width="490">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1*" />
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel Grid.Column="0" Grid.Row="0" Width="200" HorizontalAlignment="Left">
+                                                        <StackPanel VerticalAlignment="Center" Margin="0,0,0,0" >
+                                                            <RadioButton x:Name = "readLast"  >
+                                                                <TextBlock Text="Read Last" FontSize="14" />
+                                                            </RadioButton>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+
+                                                            <TextBox Padding="5,5,0,0" Background="#EAEDF1" BorderThickness="0" x:Name="txtNum2" x:FieldModifier="private" Text="0" TextChanged="TxtNum_TextChanged" MinWidth="23" MinHeight="10" Height="25" Width="200"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <StackPanel HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0">
+                                                        <StackPanel VerticalAlignment="Center" Margin="0,0,0,0" >
+                                                            <RadioButton x:Name = "all"  >
+                                                                <TextBlock Text="All" FontSize="14" />
+                                                            </RadioButton>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+
+                                                            <TextBox Padding="5,5,0,0" Background="#EAEDF1" BorderThickness="0" x:Name="txtNum3" x:FieldModifier="private" Text="0" TextChanged="TxtNum_TextChanged" MinWidth="23" MinHeight="10" Height="25" Width="200"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Grid>
+                                            </StackPanel>
+
+                                        </StackPanel>
+
+                                        <StackPanel Margin="5,5,5,0" Grid.Row="2" Width="490">
+                                            <StackPanel HorizontalAlignment="Center" Width="490">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="3*" />
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="3*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <StackPanel Grid.Row="0" Width="200" HorizontalAlignment="Center" Margin="0,5,0,5">
+                                                        <StackPanel VerticalAlignment="Center" Margin="0,0,10,0" >
+                                                            <RadioButton x:Name = "readFrom" >
+                                                                <TextBlock Text="Read From" FontSize="14" />
+                                                            </RadioButton>
+                                                        </StackPanel>
+
+                                                        <StackPanel VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Right">
+                                                            <DatePicker Background="#EAEDF1" BorderThickness="0" Margin="0,10,0,0" SelectedDate="{x:Static sys:DateTime.Now}" SelectedDateFormat="Short" Width="200"/>
+                                                        </StackPanel>
+
+                                                    </StackPanel>
+                                                    <StackPanel Grid.Column="2" Grid.Row="0" Width="200" HorizontalAlignment="Center" Margin="0,5,0,5">
+                                                        <StackPanel VerticalAlignment="Center" Margin="0,0,10,0" >
+                                                            <RadioButton x:Name = "readTo" >
+                                                                <TextBlock Text="Read To" FontSize="14" />
+                                                            </RadioButton>
+                                                        </StackPanel>
+
+                                                        <StackPanel VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Right">
+                                                            <DatePicker Background="#EAEDF1" BorderThickness="0" Margin="0,10,0,0" SelectedDate="{x:Static sys:DateTime.Now}" SelectedDateFormat="Short" Width="200"/>
+                                                        </StackPanel>
+
+                                                    </StackPanel>
+
+                                                </Grid>
+                                            </StackPanel>
+
+                                        </StackPanel>
+
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Row="0" Grid.Column="1" Background="White">
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                        </Grid>
+
+                                        <StackPanel Margin="5,5,5,0" Grid.Row="0" Width="490">
+
+                                            <StackPanel Width="490" HorizontalAlignment="Center">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1*" />
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <StackPanel Grid.Row="0" Grid.Column="0" Width="200" HorizontalAlignment="Left">
+                                                        <StackPanel VerticalAlignment="Center" Margin="0,0,0,0">
+                                                            <RadioButton x:Name = "logicalName"  >
+                                                                <TextBlock Text="Logical Name" FontSize="14" />
+                                                            </RadioButton>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+
+                                                            <TextBox Background="#EAEDF1" BorderThickness="0" x:Name="txtNum5" x:FieldModifier="private" Text="0" TextChanged="TxtNum_TextChanged" MinWidth="23" MinHeight="10" Height="25" Width="200" Padding="5,5,0,0" ScrollViewer.CanContentScroll="True"/>
+
+                                                        </StackPanel>
+                                                    </StackPanel>
+
+                                                    <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
+                                                        <StackPanel VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Stretch" >
+                                                            <RadioButton x:Name = "period"  >
+                                                                <TextBlock Text="Period" FontSize="14" />
+                                                            </RadioButton>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+
+                                                            <TextBox Background="#EAEDF1" BorderThickness="0" x:Name="txtNum6" x:FieldModifier="private" Padding="5,5,0,0" Text="0" TextChanged="TxtNum_TextChanged"  MinWidth="23" MinHeight="10" Height="25" Width="200"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+
+                                                </Grid>
+
+
+                                            </StackPanel>
+
+                                        </StackPanel>
+
+                                        <StackPanel Margin="5,5,5,0" Grid.Row="0" Width="490">
+
+                                            <StackPanel Width="490" HorizontalAlignment="Center">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1*" />
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <StackPanel Grid.Row="0" Grid.Column="0" Width="200" HorizontalAlignment="Left">
+                                                        <StackPanel VerticalAlignment="Center" Margin="0,0,0,0">
+                                                            <RadioButton x:Name = "entries"  >
+                                                                <TextBlock Text="Entries" FontSize="14" />
+                                                            </RadioButton>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+
+                                                            <TextBox Background="#EAEDF1" BorderThickness="0" x:Name="txtNum7" x:FieldModifier="private" Text="0" TextChanged="TxtNum_TextChanged" MinWidth="23" MinHeight="10" Height="25" Width="200" Padding="5,5,0,0" ScrollViewer.CanContentScroll="True"/>
+
+                                                        </StackPanel>
+                                                    </StackPanel>
+
+                                                    <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                                        <StackPanel VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Stretch" >
+                                                            <!--<RadioButton x:Name = "count"  >
+                                                                <TextBlock Text="Count" FontSize="14" />
+                                                            </RadioButton>-->
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+
+                                                            <TextBox Background="#EAEDF1" BorderThickness="0" x:Name="txtNum8" x:FieldModifier="private" Padding="5,5,0,0" Text="0" TextChanged="TxtNum_TextChanged"  MinWidth="23" MinHeight="10" Height="25" Width="200"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+
+                                                </Grid>
+
+
+                                            </StackPanel>
+
+                                        </StackPanel>
+
+                                        <StackPanel Margin="5,5,5,0" Grid.Row="0" Width="490">
+
+                                            <StackPanel Width="490" HorizontalAlignment="Center">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*"/>
+                                                    </Grid.RowDefinitions>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1*" />
+                                                        <ColumnDefinition Width="1*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <StackPanel Grid.Row="0" Grid.Column="0" Width="200" HorizontalAlignment="Left">
+                                                        <StackPanel VerticalAlignment="Center" Margin="0,0,0,0">
+                                                            <RadioButton x:Name = "mode"  >
+                                                                <TextBlock Text="Mode" FontSize="14" />
+                                                            </RadioButton>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+
+                                                            <TextBox Background="#EAEDF1" BorderThickness="0" x:Name="txtNum9" x:FieldModifier="private" Text="0" TextChanged="TxtNum_TextChanged" MinWidth="23" MinHeight="10" Height="25" Width="200" Padding="5,5,0,0" ScrollViewer.CanContentScroll="True"/>
+
+                                                        </StackPanel>
+                                                    </StackPanel>
+
+                                                    <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Right">
+                                                        <StackPanel VerticalAlignment="Center" Margin="0,0,0,0" HorizontalAlignment="Stretch" >
+                                                            <RadioButton x:Name = "object"  >
+                                                                <TextBlock Text="Object" FontSize="14" />
+                                                            </RadioButton>
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+
+                                                            <TextBox Background="#EAEDF1" BorderThickness="0" x:Name="txtNum10" x:FieldModifier="private" Padding="5,5,0,0" Text="0" TextChanged="TxtNum_TextChanged"  MinWidth="23" MinHeight="10" Height="25" Width="200"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+
+                                                </Grid>
+
+
+                                            </StackPanel>
+
+                                        </StackPanel>
+
+                                    </StackPanel>
+
+                                </Grid>
+
+                            </StackPanel>
+
+                            <StackPanel Margin="10,10,10,0" Grid.Row="1" Background="#F3F5F9" Orientation="Horizontal" HorizontalAlignment="Left" Height="30">
+                                <ComboBox Visibility="Visible" Name="ComboBox1" MinWidth="200" Grid.Row="0">
+                                    <ComboBoxItem Content="03/01/2023"></ComboBoxItem>
+                                    <ComboBoxItem Content="02/01/2023"></ComboBoxItem>
+                                    <ComboBoxItem Content="01/01/2023"></ComboBoxItem>
+                                </ComboBox>
+                            </StackPanel>
+
+                            <StackPanel Margin="10,10,10,0" Grid.Row="1" Background="#F3F5F9" Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button Margin="0,0,5,0" x:Name="Submit" Height="40" Width="120" Content="Submit" Background="White" BorderThickness="0">
+                                </Button>
+                                <Button Margin="5,0,0,0" x:Name="Reset" Height="40" Width="120" Content="Reset" Background="White" BorderThickness="0">
+                                </Button>
+                            </StackPanel>
+
+                        </Grid>
+
+                    </StackPanel>
+
+                </Grid>
+
+                <!--Switch Control-->
+                <Grid Grid.Row="4" Margin="0,10,0,0" Visibility="Collapsed">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0" HorizontalAlignment="left">
+                        <StackPanel Margin="5,0,0,0">
+                            <ComboBox x:Name="graphDataFilter" Margin="0,0,10,0" Width="120" SelectionChanged="FilterGraph" Visibility="Collapsed">
+
+                            </ComboBox>
+                        </StackPanel>
+                    </Grid>
+
+                    <Grid Grid.Column="1"  HorizontalAlignment="Right" Visibility="Visible">
+                        <StackPanel Margin="0,0,100,0" HorizontalAlignment="Right" >
+                            <ComboBox x:Name="graphFilter" Margin="0,0,10,0" Width="105" SelectionChanged="FilterGraph" Visibility="Collapsed">
+                                <ComboBoxItem Name="LineGraph" IsSelected="True">Line Graph</ComboBoxItem>
+                                <ComboBoxItem Name="BarGraph">Bar Graph</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <StackPanel Margin="0,0,50,0" HorizontalAlignment="Right">
+                            <Image Width="24" x:Name="listView" MouseDown="ChangeView">
+                                <Image.Source>
+                                    <BitmapImage UriSource="../Images/List.png" />
+                                </Image.Source>
+                            </Image>
+                            <Image Width="24" x:Name="listViewDisabled" MouseDown="ChangeView">
+                                <Image.Source>
+                                    <BitmapImage UriSource="../Images/disabledlist.png" />
+                                </Image.Source>
+                            </Image>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,10,0" HorizontalAlignment="Right">
+                            <Image Width="22" x:Name="graphView" MouseDown="ChangeView">
+                                <Image.Source>
+                                    <BitmapImage UriSource="../Images/grid.png"/>
+                                </Image.Source>
+                            </Image>
+                            <Image Width="22" x:Name="graphViewDisabled" MouseDown="ChangeView">
+                                <Image.Source>
+                                    <BitmapImage UriSource="../Images/disabledMenue.png"/>
+                                </Image.Source>
+                            </Image>
+                        </StackPanel>
+                    </Grid>
+
+                </Grid>
+
+            </Grid>
+        </StackPanel>
+
+        <!--Data Grid-->
+        <StackPanel DataContext="{Binding}" Grid.Row="1" Margin="0" x:Name="TableView" Visibility="Visible">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0" x:Name="Grid_Parent" Background="#FFEAEDF1">
+
+                    <StackPanel Margin="20">
+
+                        <CheckBox IsThreeState="True" Name="cbAllFeatures" Checked="cbAllFeatures_CheckedChanged" Unchecked="cbAllFeatures_CheckedChanged" FontSize="18" VerticalAlignment="Center" Margin="0,5">
+                            <CheckBox.Content>
+                                <TextBlock FontWeight="Bold" Foreground="#333333">Select All</TextBlock>
+                            </CheckBox.Content>
+                        </CheckBox>
+
+                        <CheckBox Name="chkIp" Checked="cbFeature_CheckedChanged" Unchecked="cbFeature_CheckedChanged" FontSize="20" Margin="0,10,0,5">
+                            <CheckBox.Content>
+                                <TextBlock Foreground="#444444" VerticalAlignment="Center">Instantaneous Parameter</TextBlock>
+                            </CheckBox.Content>
+                        </CheckBox>
+
+                        <CheckBox Name="chkBillingProfile" Checked="cbFeature_CheckedChanged" Unchecked="cbFeature_CheckedChanged" FontSize="20" Margin="0,5">
+                            <CheckBox.Content>
+                                <TextBlock Foreground="#444444" VerticalAlignment="Center">Billing Profile</TextBlock>
+                            </CheckBox.Content>
+                        </CheckBox>
+
+                        <CheckBox Name="chkBlockLoad" Checked="cbFeature_CheckedChanged" Unchecked="cbFeature_CheckedChanged" FontSize="20" Margin="0,5">
+                            <CheckBox.Content>
+                                <TextBlock Foreground="#444444" VerticalAlignment="Center">Block Load Profile</TextBlock>
+                            </CheckBox.Content>
+                        </CheckBox>
+
+                        <CheckBox Name="chkDailyLoadProfile" Checked="cbFeature_CheckedChanged" Unchecked="cbFeature_CheckedChanged" FontSize="20" Margin="0,5">
+                            <CheckBox.Content>
+                                <TextBlock Foreground="#444444" VerticalAlignment="Center">Daily Load Profile</TextBlock>
+                            </CheckBox.Content>
+                        </CheckBox>
+
+                        <CheckBox Name="chkSelfDiagnosis" Checked="cbFeature_CheckedChanged" Unchecked="cbFeature_CheckedChanged" FontSize="20" Margin="0,5">
+                            <CheckBox.Content>
+                                <TextBlock Foreground="#444444" VerticalAlignment="Center">Self Diagnosis</TextBlock>
+                            </CheckBox.Content>
+                        </CheckBox>
+
+                        <CheckBox Name="chkAllEvents" Checked="cbFeature_CheckedChanged" Unchecked="cbFeature_CheckedChanged" FontSize="20" Margin="0,5">
+                            <CheckBox.Content>
+                                <TextBlock Foreground="#444444" VerticalAlignment="Center">All Events</TextBlock>
+                            </CheckBox.Content>
+                        </CheckBox>
+                        
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+
+        <!--Data Grid Paginator-->
+        <StackPanel x:Name="Paginator" Width="auto" Margin="0,0,0,0" Grid.Row="2"  Visibility="Visible">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Visibility="Collapsed">
+                <Button Height="23" Margin="10,0,0,0"  HorizontalAlignment="Left" Name="btnFirst" VerticalAlignment="Bottom" Width="40" Content="&lt;&lt;" Click="btnFirst_Click" Opacity="0.75"/>
+
+                <Button Height="23" Margin="10,0,0,0"  VerticalAlignment="Bottom" Name="btnPrev" Width="40" Click="btnPrev_Click" Opacity="0.75" Content="&lt;"/>
+
+                <Label x:Name="lblpageInformation" Margin="10,0,0,0" 
+                        HorizontalContentAlignment="Center" HorizontalAlignment="Left" Height="30" Width="100" VerticalContentAlignment="Center" VerticalAlignment="Bottom"/>
+
+                <Button Height="23" Margin="10,0,0,0"  HorizontalAlignment="Right" Name="btnNext" VerticalAlignment="Bottom" Width="40" Content="&gt;" Click="btnNext_Click" Opacity="0.75"/>
+
+                <Button Height="23" Margin="10,0,0,0"  HorizontalAlignment="Right"  VerticalAlignment="Bottom" Width="40" Name="btnLast" Click="btnLast_Click" Opacity="0.75" Content="&gt;&gt;"/>
+
+                <ComboBox x:Name="cbNumberOfRecords" Margin="10,0,0,0"  HorizontalAlignment="Left"  VerticalAlignment="Bottom" Width="120"  SelectedIndex="0" SelectionChanged="cbNumberOfRecords_SelectionChanged" Opacity="0.75">
+
+                    <sys:String>All</sys:String>
+
+                    <sys:Int32>10</sys:Int32>
+
+                    <sys:Int32>20</sys:Int32>
+
+                    <sys:Int32>30</sys:Int32>
+
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <TextBlock Margin="0,0,10,0">Start Date</TextBlock>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <DatePicker Background="#EAEDF1" BorderThickness="0" Margin="0,10,0,0" SelectedDateFormat="Short" Width="105" x:Name="FilterDatePicker" IsTodayHighlighted="True"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <TextBlock Margin="10,0,10,0">End Date</TextBlock>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <DatePicker Background="#EAEDF1" BorderThickness="0" Margin="0,10,0,0" SelectedDateFormat="Short" Width="105" x:Name="FilterToDatePicker" IsTodayHighlighted="True" />
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Left"  VerticalAlignment="Bottom">
+                    <ComboBox x:Name="gridPageSize" Margin="10,0,0,0" Width="50"  SelectedIndex="0" SelectionChanged="FilterByPageSize" Opacity="0.75">
+
+                        <sys:String>All</sys:String>
+
+                        <sys:Int32>10</sys:Int32>
+
+                        <sys:Int32>20</sys:Int32>
+
+                        <sys:Int32>30</sys:Int32>
+
+                    </ComboBox>
+                </StackPanel>
+                <!--<StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <Button Margin="10,0,0,0" MinWidth="50" x:Name="FilterData" Click="FilterByDate">Filter</Button>
+                </StackPanel>-->
+            </StackPanel>
+        </StackPanel>
+
+        <!--Graph-->
+        <StackPanel Grid.Row="1" Margin="0,0,0,0" x:Name="GraphView" Visibility="Collapsed">
+            <Border BorderBrush="Black" BorderThickness="1" Margin="10,55,0,0" VerticalAlignment="Center"  >
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel x:Name="Grid_Parent1">
+                        <Grid Grid.Row="0" Margin="0,0,0,0" x:Name="MainGraphView" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <StackPanel Width="300" Height="300">
+                                <Canvas Name="Canvas1">
+                                    <Line X1="0" Y1="100"  X2="200" Y2="100" Stroke="Black" ></Line>
+
+                                    <Line X1="100" Y1="0" X2="100" Y2="200" Stroke="Black" ></Line>
+
+                                    <Line X1="0" Y1="0" X2="100" Y2="100" Stroke="Black"></Line>
+                                </Canvas>
+                            </StackPanel>
+
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </StackPanel>
+    </Grid>
+</UserControl>
